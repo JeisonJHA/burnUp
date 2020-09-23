@@ -55,11 +55,17 @@ export default function Example() {
 
   const handleConsultar = async (event: FormEvent) => {
     event.preventDefault()
-    setConsultando(true)
-    const dados = await getDados()
-    setGoal(dados[dados.length - 1].ideal)
-    setDados(dados)
-    setConsultando(false)
+    try {
+      setConsultando(true)
+      const dados = await getDados()
+      setGoal(dados[dados.length - 1].ideal)
+      setDados(dados)
+    } catch (err) {
+      console.log('Erro ao consultar dados. ', err)
+    } finally {
+      setConsultando(false)
+    }
+    
   }
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>): void {
